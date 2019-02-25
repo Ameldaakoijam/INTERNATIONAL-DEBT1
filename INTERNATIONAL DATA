@@ -1,0 +1,49 @@
+Query 1: Total number of countries in the data set
+SELECT count(distinct(Country_name)) From `bigquery-public-data.world_bank_intl_debt.international_debt`
+Result = 134
+
+Query 2: Top 100 in descending order
+SELECT * FROM `bigquery-public-data.world_bank_intl_debt.international_debt`
+ORDER BY value DESC
+LIMIT 100
+
+Query 3 : Data for country Mexico
+SELECT *FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+WHERE country_code="MEX"
+
+Query 4: Interest payments on external debt, long-term (INT, current US$)
+SELECT *FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+WHERE INDICATOR_NAME like "Interest payments on external debt, long-term (INT, current US$)"
+
+Query 5: Minimum value of  debt each country
+SELECT country_name,MIN(VALUE)
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+GROUP BY country_name
+
+Query 6: Highest value of debt in data set.
+SELECT MAX(VALUE)
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+RESULT-  2.825887726380909E13
+
+Query 7: Average amount of debt of all countries in the data se for 2019 
+SELECT AVG(VALUE)
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+WHERE year=2019
+Result = 4.802610483996117E9
+
+Query 8: Total value of debt for Mexico
+SELECT SUM(VALUE)
+FROM `bigquery-public-data.world_bank_intl_debt.international_debt` 
+WHERE country_code= "MEX"
+Result = 1.0659313070683834E14
+  
+Query 9:
+SELECT S.VALUE FROM `bigquery-public-data.world_bank_intl_debt.international_debt`S INNER JOIN(SELECT MAX(VALUE) AS VAL FROM `bigquery-public-data.world_bank_intl_debt.international_debt` B WHERE B.COUNTRY_CODE='MEX') ON S.VALUE=VAL
+Result = 1.28819394327628E12
+
+Query 10
+SELECT `bigquery-public-data.world_bank_intl_education.country_summary`.country_code  
+FROM `bigquery-public-data.world_bank_intl_education.country_summary`
+INNER JOIN  `bigquery-public-data.world_bank_intl_education.country_series_definitions`  
+ON `bigquery-public-data.world_bank_intl_education.country_summary`.country_code =`bigquery-public-data.world_bank_intl_education.country_series_definitions` .country_code
+Result = first row GIB, last row DMA
